@@ -4,18 +4,18 @@ const menuButton = document.querySelector('.lineBurger');
 const mainNavbarMobileMenu = document.querySelector('.mainNavbarMobileMenu');
 const closeButtonMenu = document.querySelector('.buttonClose');
 
-let menuToggle = false;
+let menuToggleStatus = false;
 
 // Function to close the dropdown menu.
 function closeMenu() {
   mainNavbarMobileMenu.style.display = 'none';
-  menuToggle = false;
+  menuToggleStatus = false;
 }
 
 // Function to check if the click occurred inside or outside the menu.
 function handleOutsideClick(event) {
   const targetElement = event.target;
-  const isMenuOpen = menuToggle;
+  const isMenuOpen = menuToggleStatus;
   const isClickInsideMenu = mainNavbarMobileMenu.contains(targetElement);
   const isClickOnButton = targetElement === menuButton;
 
@@ -28,7 +28,7 @@ document.addEventListener('click', handleOutsideClick);
 
 // Function to toggle the menu open/close state.
 function menuToggle() {
-  if (menuToggle) {
+  if (menuToggleStatus) {
     mainNavbarMobileMenu.style.display = 'flex';
   } else {
     mainNavbarMobileMenu.style.display = 'none';
@@ -37,12 +37,12 @@ function menuToggle() {
 
 // AAdd a click event on the button to open/close the menu.
 menuButton.addEventListener('click', function() {
-  menuToggle = !menuToggle;
+  menuToggleStatus = !menuToggleStatus;
   menuToggle();
 });
 
 closeButtonMenu.addEventListener('click', function() {
-  menuToggle = false;
+  menuToggleStatus = false;
   menuToggle();
 });
 
@@ -84,13 +84,6 @@ closeButtonMenu.addEventListener('click', function() {
     document.getElementById("minutes").innerText = Math.floor((distance % hour) / minute),
     document.getElementById("seconds").innerText = Math.floor((distance % minute) / second);
 
-    // If the birthday has passed, display the corresponding message.
-    if (distance < 0) {
-      document.getElementById("headline").innerText = "It's my birthday!";
-      document.getElementById("countdown").style.display = "none";
-      document.getElementById("content").style.display = "block";
-      clearInterval(x);
-    }
   }, 0);
 })();
 
