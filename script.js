@@ -4,30 +4,31 @@ const menuButton = document.querySelector('.lineBurger');
 const mainNavbarMobileMenu = document.querySelector('.mainNavbarMobileMenu');
 const closeButtonMenu = document.querySelector('.buttonClose');
 
-let menuOpenClose = false;
+let menuToggle = false;
 
 // Function to close the dropdown menu.
 function closeMenu() {
   mainNavbarMobileMenu.style.display = 'none';
-  menuOpenClose = false;
+  menuToggle = false;
 }
 
 // Function to check if the click occurred inside or outside the menu.
-function handleDocumentClick(event) {
+function handleOutsideClick(event) {
   const targetElement = event.target;
+  const isMenuOpen = menuToggle;
+  const isClickInsideMenu = mainNavbarMobileMenu.contains(targetElement);
+  const isClickOnButton = targetElement === menuButton;
 
-  // Check if the menu is open and if the click did not occur inside the menu or on the button.
-  if (menuOpenClose && !mainNavbarMobileMenu.contains(targetElement) && targetElement !== menuButton) {
+  if (isMenuOpen && !isClickInsideMenu && !isClickOnButton) {
     closeMenu();
   }
 }
-
 // Add a click event listener on the document to detect clicks.
-document.addEventListener('click', handleDocumentClick);
+document.addEventListener('click', handleOutsideClick);
 
 // Function to toggle the menu open/close state.
 function menuToggle() {
-  if (menuOpenClose) {
+  if (menuToggle) {
     mainNavbarMobileMenu.style.display = 'flex';
   } else {
     mainNavbarMobileMenu.style.display = 'none';
@@ -36,12 +37,12 @@ function menuToggle() {
 
 // AAdd a click event on the button to open/close the menu.
 menuButton.addEventListener('click', function() {
-  menuOpenClose = !menuOpenClose;
+  menuToggle = !menuToggle;
   menuToggle();
 });
 
 closeButtonMenu.addEventListener('click', function() {
-  menuOpenClose = false;
+  menuToggle = false;
   menuToggle();
 });
 
@@ -62,17 +63,17 @@ closeButtonMenu.addEventListener('click', function() {
       yyyy = today.getFullYear(),
       nextYear = yyyy + 1,
       dayMonth = "12/16/",
-      birthday = dayMonth + yyyy;
+      offerEnds = dayMonth + yyyy;
 
   today = mm + "/" + dd + "/" + yyyy;
 
   // If the birthday has already passed this year, update the date for next year.
-  if (today > birthday) {
-    birthday = dayMonth + nextYear;
+  if (today > offerEnds) {
+    offerEnds = dayMonth + nextYear;
   }
 
   // Get the remaining time until the birthday.
-  const countDown = new Date(birthday).getTime();
+  const countDown = new Date(offerEnds).getTime();
   const x = setInterval(function() {    
     const now = new Date().getTime();
     const distance = countDown - now;
